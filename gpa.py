@@ -1,13 +1,13 @@
 import streamlit as st
 
-# Function to convert Grades to Points
+# GPA等级转换分数
 def grade_to_points(grade):
     grade_map = {
         'O': 10.0, 'A+': 9.0, 'A': 8.0, 'B+': 7.0, 'B': 6.0, 'C': 5.5, 'F':0.0
     }
     return grade_map.get(grade.upper(), 0.0)
 
-# Function to calculate GPA
+# 计算 GPA
 def calculate_gpa(credits, grades):
     total_credits = 0
     weighted_sum = 0
@@ -25,41 +25,39 @@ def calculate_gpa(credits, grades):
     gpa = weighted_sum / total_credits
     return gpa
 
-
-st.set_page_config(page_title="GPA Calculator", page_icon=":mortar_board:")
+## 设置图标
+st.set_page_config(page_title="GPA 计算器", page_icon=":mortar_board:")
 
 st.title("GPA Calculator")
 
-num_courses = st.number_input("Enter the number of Courses:", min_value=1, step=1, value=1)
+num_courses = st.number_input("输入有多少门课程:", min_value=1, step=1, value=1)
 
 credits = []
 grades = []
 
-st.write("Enter Credits and select Grade for each Course:")
+st.write("输入课程学分并选择对应等级:")
 
 
 columns = st.columns(2)
 for i in range(num_courses):
     
-    with columns[0]:  # Column for Credits
-        credit = st.number_input(f"Credits:", min_value=0, step=1, value=0, key=f"credit_{i}")
+    with columns[0]:  # 学分 列
+        credit = st.number_input(f"学分:", min_value=0, step=1, value=0, key=f"学分_{i}")
         credits.append(credit)
     
-    with columns[1]:  # Column for Grades
-        grade = st.selectbox(f"Grade:", ('O', 'A+', 'A', 'B+', 'B', 'C', 'F'), index=0, key=f"grade_{i}")
+    with columns[1]:  # 等级 列
+        grade = st.selectbox(f"等级:", ('O', 'A+', 'A', 'B+', 'B', 'C', 'F'), index=0, key=f"等级_{i}")
         grades.append(grade)
 
-if st.button("Calculate GPA"):
+if st.button("开始计算 GPA"):
     gpa = calculate_gpa(credits, grades)    
-    st.subheader(f"Your GPA is {gpa:.2f}")
+    st.subheader(f"你的 GPA 是 {gpa:.2f}")
 
 
-# Footer
-#col = st.columns(4)
-
-
-#with col[3]:
-#    st.write("Made with ❤ by [Alok](https://github.com/alokverma18/gpa-calculator)")
+# 底部 创建4列，然后并排3列写作者
+col = st.columns(4)
+with col[3]:
+    st.write("[inkglede](https://github.com/66my/gpa-calculator) 汉化翻译")
 
 
 
